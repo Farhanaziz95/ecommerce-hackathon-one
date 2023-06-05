@@ -1,63 +1,49 @@
-import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactFragment, ReactPortal } from "react";
+import { Product, ProductFeature } from "@/types/featureproduct";
 
-import { createClient } from "next-sanity";
+import Image from "next/image";
+import Link from "next/link";
+import { client } from "@/util/createClient";
 
-const client = createClient({
-    projectId: "5nk4irff",
-    dataset: "production",
-    apiVersion: "2022-03-25",
-    useCdn: false
-  });
-
-
-  export default function FeatureProduct({ products }:any) {
-    return (
-      <>
-        <header>
-          <h1>Sanity + Next.js</h1>
-        </header>
-        <main>
-          <h2>pets</h2>
-          {/* {products.length > 0 && (
-            <ul>
-              {products.map((product: { _id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | ReactFragment | ReactPortal | PromiseLikeOfReactNode | null | undefined; }) => (
-                <li key={product._id}>{product?.name}</li>
-              ))}
-            </ul>
-          )}
-          {!(products.length > 0) && <p>No products to show</p>}
-          {products.length > 0 && (
-            <div>
-              <pre>{JSON.stringify(products, null, 2)}</pre>
-            </div>
-          )}
-          {!(products.length > 0) && (
-            <div>
-              <div>¯\_(ツ)_/¯</div>
-              <p>
-                Your data will show up here when you've configured everything
-                correctly
-              </p>
-            </div>
-          )} */}
-          <div>
-              <pre>{JSON.stringify(products, null, 2)}</pre>
-            </div>
-        </main>
-      </>
-    );
+export default async function FeatureProduct() {
+  const products_feature = await client.fetch(`
+  *[_type == "product_features"]{
+    product_feature[]->{
+    images_gallery[0]{asset->{url}},
+    product_name,
+    product_slug{
+      current
+    },
+    actual_price,
+    discout_price,
   }
+}`);
+
+  return (
+    <>
+      <main className="py-8">
+        <div className="flex flex-col justify-center items-center gap-y-3 my-5">
+          <label className="uppercase font-semibold text-blue-600 text-sm">PRODUCTS</label>
+          <h1 className="text-black font-semibold text-4xl">Check What We Have</h1>
+        </div>
+        <div className={'flex flex-wrap gap-5 pt-8 justify-around items-center'}>
+          {products_feature.map((element: Product) => (
+            element.product_feature.map((element1: ProductFeature) => (
+              <Link href={'/product_detail/' + element1.product_slug.current} key={element1.product_slug.current} className={'flex flex-col items-center justify-center gap-y-3 hover:scale-125 transition-all duration-500'}>
+                <Image src={element1.images_gallery.asset.url} width={300} height={300} alt={""} />
+                <label className={'font-semibold'}>{element1.product_name}</label>
+                <label><span className="text-md line-through">${element1.actual_price}</span> <span className="font-semibold">${element1.actual_price - element1.discout_price}</span></label>
+
+                {/* <label className={'font-semibold'}>$ / </label> */}
+              </Link>
+            ))
+          ))}
+        </div>
+
+
+      </main>
+    </>
+  );
+}
 
 
 
-
-
-  export async function getStaticProps() {
-    const products = await client.fetch(`*[_type == "Products"]`);
-  
-    return {
-      props: {
-        products
-      }
-    };
-  }

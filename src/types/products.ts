@@ -12,5 +12,8 @@ export type AllProduct = {
     product_tags:{
         tags_name: string;
     }
+    product_category:{
+        category_name: string;
+    }
     product_name: string;
 };

@@ -43,7 +43,7 @@ export default function About() {
                 </div>
                 <div className={'mt-14 flex flex-col items-center sm:flex-row sm:items-center sm:justify-between gap-4'}>
                     <div className={'min-w-fit'}>
-                        <Image src={'/images/productsGirl3.webp'} alt={'Products Girl 3'} width={300} height={300} />
+                        <Image src={'/feature.png'} alt={'Products Girl 3'} width={300} height={300} />
                     </div>
                     <div className={'min-w-[50%] flex flex-col items-center gap-y-3 mt-3'}>
                         <p className={'font-light text-center sm:text-left'}>

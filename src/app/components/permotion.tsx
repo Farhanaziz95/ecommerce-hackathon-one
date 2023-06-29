@@ -17,7 +17,7 @@ const EventsBanner = () => {
               <label className="block">for the summer season</label>
             </div>
             <div>
-              <Image alt="Promotion Girl" width={180} height={180} src="" />
+              <Image alt="Promotion Girl" width={180} height={180} src="/event1.png" />
             </div>
           </div>
           <div className="h-36 flex flex-col items-center justify-center flex-grow gap-y-3 bg-gray-900">
@@ -32,7 +32,7 @@ const EventsBanner = () => {
             <label><span className="text-md line-through">$100.00</span> <span className="font-semibold">$75.00</span></label>
           </div>
           <div>
-            <Image alt="Promotion Girl" width={180} height={180} src="" />
+            <Image alt="Promotion Girl" width={180} height={180} src="/event2.png" />
           </div>
         </div>
         <div className="flex flex-col justify-between items-center flex-grow pb-0 pt-3 px-2 bg-gray-300">
@@ -41,7 +41,7 @@ const EventsBanner = () => {
             <label><span className="text-md line-through">$225.00</span> <span className="font-semibold">$190.00</span></label>
           </div>
           <div>
-            <Image alt="Promotion Girl" width={180} height={180} src="" />
+            <Image alt="Promotion Girl" width={180} height={180} src="/event3.png" />
           </div>
         </div>
       </div>

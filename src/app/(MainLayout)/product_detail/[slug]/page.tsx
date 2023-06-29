@@ -1,14 +1,12 @@
 'use client'
 
 import { MutableRefObject, useEffect, useRef, useState } from "react";
-import { SignIn, useAuth } from "@clerk/nextjs";
 import { ToastContainer, toast } from "react-toastify";
 
 import { FaCartPlus } from 'react-icons/fa';
-import Quantity from "@/app/components/Quantity";
-import VariantSelector from "@/app/components/Size";
 import { client } from "@/util/createClient";
 import { productDetails } from "@/types/productdetails";
+import { useAuth } from "@clerk/nextjs";
 
 async function getproductdetails(slug: string) {
   const newproduct: productDetails[] = await client.fetch(`
@@ -39,7 +37,7 @@ async function getproductdetails(slug: string) {
 }
 
 
-export default function productDetail({ params }: { params: { slug: string } }) {
+export default function ProductDetail({ params }: { params: { slug: string } }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [products, setProduct] = useState<productDetails[]>()
   const [size, setSize] = useState('')

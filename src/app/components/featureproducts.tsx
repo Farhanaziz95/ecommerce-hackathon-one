@@ -1,10 +1,13 @@
+'use client'
+
 import { Product, ProductFeature } from "@/types/featureproduct";
+import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/util/createClient";
 
-export default async function FeatureProduct() {
+async function getFeature(){
   const products_feature = await client.fetch(`
   *[_type == "product_features"]{
     product_feature[]->{
@@ -18,6 +21,27 @@ export default async function FeatureProduct() {
   }
 }`);
 
+return products_feature
+}
+
+export default function FeatureProduct() {
+  const [product , setProduct] = useState<Product[]>()
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await getFeature();
+        setProduct(result);
+
+        // setLoading(false);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchData()
+
+  }, []);
+
   return (
     <>
       <main className="py-8">
@@ -26,7 +50,7 @@ export default async function FeatureProduct() {
           <h1 className="text-black font-semibold text-4xl">Check What We Have</h1>
         </div>
         <div className={'flex flex-wrap gap-5 pt-8 justify-around items-center'}>
-          {products_feature.map((element: Product) => (
+          {product?.map((element: Product) => (
             element.product_feature.map((element1: ProductFeature) => (
               <Link href={'/product_detail/' + element1.product_slug.current} key={element1.product_slug.current} className={'flex flex-col items-center justify-center gap-y-3 hover:scale-125 transition-all duration-500'}>
                 <Image src={element1.images_gallery.asset.url} width={300} height={300} alt={""} />

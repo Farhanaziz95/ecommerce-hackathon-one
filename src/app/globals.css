@@ -20,3 +20,10 @@ body {
   /* color: rgb(var(--foreground-rgb)); */
   
 }
+
+/* .btn2 {
+  @apply font-bold  bg-sky-200 hover:bg-sky-50 items-center hover:border-[1px] border-[1px] hover:border-[#000000] border-[#f1f1f1] cursor-pointer rounded-[50%] flex shrink-0 py-[5px] px-[10px] 
+}
+.btn3 {
+  @apply font-bold  bg-black hover:bg-sky-200 items-center hover:border-[1px] border-[1px] hover:text-black text-white hover:border-black border-white/90 cursor-pointer rounded-[50%] flex shrink-0 py-[5px] px-[10px] 
+} */

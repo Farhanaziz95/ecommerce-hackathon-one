@@ -14,7 +14,8 @@ export default function Cart() {
     const [totalPrice, setTotalPrice] = useState(0)
     const [totalQty, setTotalQty] = useState(0)
     const [loading, setLoading] = useState(false)
-    const { isLoaded, isSignedIn} = useUser();
+    const [hit, setHit] = useState(true)
+    const { isLoaded, isSignedIn } = useUser();
 
 
     useEffect(() => {
@@ -26,9 +27,11 @@ export default function Cart() {
             calculateTotal()
             setLoading(!loading)
         };
-        fetchCart();
-
-    });
+        if (hit) {
+            fetchCart();
+            setHit(!hit)
+        }
+    }, [hit]);
 
     useEffect(() => {
         calculateTotal();
@@ -114,21 +117,21 @@ export default function Cart() {
             <div className=" mx-auto flex justify-center gap-4 p-8 lg:flex-row flex-col ">
                 <div className="  mt-8 ">
 
-                    {data.length < 1 &&  (
+                    {data.length < 1 && (
                         loading ?
-                        <div className="flex flex-col items-center mx-auto ">
-                            <AiOutlineShopping size={150} />
-                            <h1 className='text-3xl lg:text-2xl md:text-xl font-bold text-primary '>Your shopping bag is empty.</h1>
-                        </div>:
-                        <div className="flex flex-col items-center mx-auto">
-                        {/* Skeleton Loading */}
-                        <div className="animate-pulse flex flex-col items-center">
-                            <div className="bg-gray-300 h-40 w-40 mb-4 rounded-full"></div>
-                            <div className="bg-gray-300 h-8 w-80 mb-2 rounded"></div>
-                            {/* <div className="bg-gray-300 h-6 w-40 mb-2 rounded"></div>
+                            <div className="flex flex-col items-center mx-auto ">
+                                <AiOutlineShopping size={150} />
+                                <h1 className='text-3xl lg:text-2xl md:text-xl font-bold text-primary '>Your shopping bag is empty.</h1>
+                            </div> :
+                            <div className="flex flex-col items-center mx-auto">
+                                {/* Skeleton Loading */}
+                                <div className="animate-pulse flex flex-col items-center">
+                                    <div className="bg-gray-300 h-40 w-40 mb-4 rounded-full"></div>
+                                    <div className="bg-gray-300 h-8 w-80 mb-2 rounded"></div>
+                                    {/* <div className="bg-gray-300 h-6 w-40 mb-2 rounded"></div>
                             <div className="bg-gray-300 h-6 w-40 mb-2 rounded"></div> */}
-                        </div>
-                    </div>
+                                </div>
+                            </div>
                     )
                     }
 
@@ -205,7 +208,7 @@ export default function Cart() {
                     )
                 }
             </div>
-            <ToastContainer/>
+            <ToastContainer />
         </div>
     )
 }

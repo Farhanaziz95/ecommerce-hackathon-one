@@ -6,7 +6,7 @@ import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineShopping } from 'react-icons/ai'
 import { urlFor } from '@/util/createClient';
 import { ToastContainer, toast } from "react-toastify";
-import { useUser } from '@clerk/nextjs';
+import { useAuth } from '@clerk/nextjs';
 import getStripe from '@/util/stripe'
 
 export default function Cart() {
@@ -15,8 +15,8 @@ export default function Cart() {
     const [totalQty, setTotalQty] = useState(0)
     const [loading, setLoading] = useState(false)
     const [hit, setHit] = useState(true)
-    const { isLoaded, isSignedIn } = useUser();
-
+    const { isLoaded, userId} = useAuth();
+    const [emptyCartMessage, setEmptyCartMessage] = useState('Your shopping bag is empty.')
 
     useEffect(() => {
         const fetchCart = async () => {
@@ -28,10 +28,17 @@ export default function Cart() {
             setLoading(!loading)
         };
         if (hit) {
-            fetchCart();
+            if (userId == undefined || userId == null) {
+                setEmptyCartMessage('You Need To Sign-in to see Your Cart')
+                setLoading(!loading)
+
+            } else {
+                fetchCart();
+            }
             setHit(!hit)
         }
     }, [hit]);
+
 
     useEffect(() => {
         calculateTotal();
@@ -121,7 +128,7 @@ export default function Cart() {
                         loading ?
                             <div className="flex flex-col items-center mx-auto ">
                                 <AiOutlineShopping size={150} />
-                                <h1 className='text-3xl lg:text-2xl md:text-xl font-bold text-primary '>Your shopping bag is empty.</h1>
+                                <h1 className='text-3xl lg:text-2xl md:text-xl font-bold text-primary '>{emptyCartMessage}</h1>
                             </div> :
                             <div className="flex flex-col items-center mx-auto">
                                 {/* Skeleton Loading */}
@@ -146,7 +153,7 @@ export default function Cart() {
                                     <div className="flex  gap-4 md:justify-evenly ">
                                         <h3 className=' text-xl md:text-2xl lg:text-3xl  text-primary  '> {item.item_name} <span className='text-md md:text-xl lg:text-2xl text-gray-700'>({item.size})</span> </h3>
                                         <button type='button' className='ml-auto hover:text-red-500' onClick={() => {
-                                            if (!isLoaded || !isSignedIn) {
+                                            if (!isLoaded || !userId) {
                                                 toast.error("You cannot proceed until you login.")
                                             } else {
                                                 handleDeleteItem(item.id)

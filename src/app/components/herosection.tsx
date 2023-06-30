@@ -21,7 +21,7 @@ export const HeroSection = () => {
                     </div>
                     <div className="flex items-center space-x-3">
                         <Link
-                            href="/"
+                            href="/products"
                             className="inline-flex items-center justify-center h-12 px-6 mr-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-green-400 hover:bg-green-700 focus:shadow-outline focus:outline-none"
                         >
                             <FaShoppingCart className='mr-3'/>

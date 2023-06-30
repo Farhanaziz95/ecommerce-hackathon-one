@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.21.10",
+    "@portabletext/react": "^3.0.4",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.11.5",
     "@stripe/stripe-js": "^1.54.1",

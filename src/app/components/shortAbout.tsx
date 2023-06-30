@@ -50,7 +50,7 @@ export default function About() {
                             This piece is ethically crafted in our small family-owned workshop in Peru with unmatched attention to
                             detail and care. The Natural color is the actual natural color of the fiber, undyed and 100% traceable.
                         </p>
-                        <Link href={'/allProducts'} className={'mt-4'}>
+                        <Link href={'/Products'} className={'mt-4'}>
                             <button onClick={undefined}
                                 className='px-14 text-white font-semibold bg-black py-2 text-sm border-t-2 border-l-2 border-gray-500'>
                                 See All Products

@@ -1,24 +1,17 @@
 import { Cart, cartTable, db } from '@/util/drizzle';
 import { NextRequest, NextResponse } from 'next/server';
-import { and, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 import Stripe from 'stripe';
 
-// import { Product } from '@/src/types/psroduct';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: '2022-11-15',
 });
-// export const POST =async (request : NextRequest) => {
-//   const req = await request.json();
-//   return NextResponse.json(req.cartItems)
-// }
 
 export const POST = async (request: NextRequest) => {
     const { data } = await request.json();
 
-    // return NextResponse.json(cartItems)
     let userid = '';
-    let productid = '';
     try {
         const lineItems = data?.map((item: Cart) => {
             userid = item.user_id
@@ -40,10 +33,6 @@ export const POST = async (request: NextRequest) => {
             };
         });
 
-        //   console.log(lineItems)
-        console.log()
-        //   console.log(await request.json())
-
         const params: Stripe.Checkout.SessionCreateParams = {
             submit_type: 'pay',
             mode: 'payment',
@@ -56,9 +45,6 @@ export const POST = async (request: NextRequest) => {
 
         const stringSession: Stripe.Checkout.Session = await stripe.checkout.sessions.create(params);
         
-        console.log(stringSession)
-        // console.log(userid)
-        // console.log(productid)
         const res = await db.update(cartTable)
                     .set({ status: stringSession.id })
                     .where(eq(cartTable.user_id, userid))

@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { client } from "@/util/createClient";
 
-async function getFeature(){
+async function getFeature() {
   const products_feature = await client.fetch(`
   *[_type == "product_features"]{
     product_feature[]->{
@@ -21,18 +21,17 @@ async function getFeature(){
   }
 }`);
 
-return products_feature
+  return products_feature
 }
 
 export default function FeatureProduct() {
-  const [product , setProduct] = useState<Product[]>()
+  const [product, setProduct] = useState<Product[]>()
   useEffect(() => {
     async function fetchData() {
       try {
         const result = await getFeature();
         setProduct(result);
 
-        // setLoading(false);
       } catch (error) {
         console.log(error)
       }
@@ -56,8 +55,6 @@ export default function FeatureProduct() {
                 <Image src={element1.images_gallery.asset.url} width={300} height={300} alt={""} />
                 <label className={'font-semibold'}>{element1.product_name}</label>
                 <label><span className="text-md line-through">${element1.actual_price}</span> <span className="font-semibold">${element1.actual_price - element1.discout_price}</span></label>
-
-                {/* <label className={'font-semibold'}>$ / </label> */}
               </Link>
             ))
           ))}

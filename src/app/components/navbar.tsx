@@ -1,8 +1,8 @@
 'use client'
 
 import { FaBars, FaShoppingCart, FaSignInAlt } from 'react-icons/fa';
-import { UserButton, currentUser } from '@clerk/nextjs';
-import { useEffect, useState } from 'react';
+import { UserButton } from '@clerk/nextjs';
+import {  useState } from 'react';
 
 import { AllCategory } from '@/types/category';
 import Image from 'next/image';
@@ -25,11 +25,8 @@ async function fetchCategories() {
 
 export default function NavBar({ categories }: { categories: AllCategory[] }) {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const { isLoaded, userId, sessionId, getToken } = useAuth();
-  // if (!isLoaded || !userId) {
-  //   return null;
-  // }
-
+  const { userId } = useAuth();
+  
   return (
     <>
       <header className="header sticky top-0 z-[1] bg-white shadow-md flex items-center justify-between px-8 py-02">
@@ -83,7 +80,7 @@ export default function NavBar({ categories }: { categories: AllCategory[] }) {
             </h2>
           </Link>
         ))}
-        <Link href="/">
+        <Link href="/products">
           <h2 className={'font-semibold whitespace-nowrap hover:underline focus:underline'}>
             All Products
           </h2>

@@ -1,4 +1,4 @@
-import{date, decimal, integer, pgTable, serial, timestamp, varchar} from 'drizzle-orm/pg-core'
+import{integer, pgTable, serial, timestamp, varchar} from 'drizzle-orm/pg-core'
 
 import { InferModel } from 'drizzle-orm'
 import {drizzle} from 'drizzle-orm/vercel-postgres'
